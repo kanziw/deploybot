@@ -46,10 +46,12 @@ jobs:
     steps:
       - uses: actions/github-script@v5
         with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           script: |
             github.rest.repos.createDeployment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: '${{ github.sha }}',
               environment: 'staging',
+              auto_merge: false,
             })
