@@ -41,8 +41,8 @@ jobs:
 
   trigger-deployment:
     runs-on: ubuntu-latest
-#    if: github.event_name == 'push'
-#    needs: [lint, unit]
+    if: github.event_name == 'push'
+    needs: [lint, unit]
     steps:
       - uses: actions/github-script@v5
         with:
