@@ -41,7 +41,7 @@ jobs:
 
   trigger-deployment:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/main'
     needs: [lint, unit]
     steps:
       - uses: actions/github-script@v5
@@ -51,7 +51,7 @@ jobs:
             github.rest.repos.createDeployment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: '${{ github.sha }}',
+              ref: 'main',
               environment: 'staging',
               auto_merge: false,
               required_contexts: [],
