@@ -1,0 +1,39 @@
+name: deploy
+
+on:
+  - deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 50
+
+      - name: Set deployment status to [in_progress]
+        uses: rsotnychenko/deployment-status-update@0.2.0
+        with:
+          run_id: ${{ github.run_id }}
+          status: in_progress
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Go 1.17
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - name: Run
+        run: |
+          make run
+
+      - name: Set deployment result status
+        if: always()
+        uses: rsotnychenko/deployment-status-update@0.2.0
+        with:
+          status: ${{ job.status }}
+          run_id: ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
