@@ -54,4 +54,5 @@ jobs:
               ref: '${{ github.sha }}',
               environment: 'staging',
               auto_merge: false,
+              required_contexts: [],
             })
