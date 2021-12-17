@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"strconv"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -37,12 +36,4 @@ func getEnv(key, defaultValue string) (value string) {
 		}
 	}
 	return value
-}
-
-func mustAtoi(s string) int {
-	i, err := strconv.Atoi(s)
-	if err != nil {
-		log.Panic(err)
-	}
-	return i
 }
